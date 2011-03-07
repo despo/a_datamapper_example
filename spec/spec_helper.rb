@@ -5,8 +5,11 @@ require 'dm-core'
 require 'dm-migrations'
 require 'dm-timestamps'
 
-DataMapper.setup(:default, 'sqlite3://test.db')
+require File.join(File.dirname(__FILE__), '../lib/post')
+
+#testing in memory
+DataMapper.setup(:default, 'sqlite::memory:')
 
 Rspec.configure do |conf|
-  conf.include Rack::Test::Methods
+   conf.before(:each) { DataMapper.auto_migrate! }
 end
