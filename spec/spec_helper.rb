@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'sinatra'
 require 'rspec'
 require 'rack/test'
 require 'dm-core'
