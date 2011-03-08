@@ -2,11 +2,16 @@
 
 ENV['RACK_ENV'] = 'test'
 
-require File.join(File.dirname(__FILE__), '..', '..', 'datamapper_example.rb')
-
+require 'sinatra/base'
 require 'capybara'
 require 'capybara/cucumber'
 require 'rspec'
+require 'rack/test'
+
+require File.join(File.dirname(__FILE__), '..', '..', 'datamapper_example.rb')
+
+DataMapper.setup(:default, 'sqlite::memory:')
+DataMapper.auto_migrate!
 
 Capybara.app = DataMapperExample
 
