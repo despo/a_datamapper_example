@@ -1,7 +1,7 @@
 class DataMapperExample < Sinatra::Base
 
   get '/' do
-    "Not much here to see right now"
+    "Not much to see here right now!"
   end
 
   get '/post/new' do
