@@ -13,7 +13,20 @@ class DataMapperExample < Sinatra::Base
   end
 
   get '/post/new' do
+      haml :new_post
+  end
 
+  get '/posts' do
+    @posts = Post.all
+    haml :posts
+  end
+
+  post '/post/add' do
+    post = Post.new
+    post.title = params[:title]
+    post.body = params[:body]
+    post.save
+    redirect "/posts"
   end
 
 end

@@ -1,5 +1,5 @@
 Feature: Adding content
-  In order to be able to demonstrate different datamapper usage examples,
+In order to be able to demonstrate different datamapper usage examples,
   As a user
   I want to be able to add new posts
 
