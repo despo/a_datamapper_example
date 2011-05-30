@@ -9,7 +9,7 @@ require File.join(File.dirname(__FILE__), 'lib/post')
 class DataMapperExample < Sinatra::Base
 
   get '/' do
-    "Not much to see here right now!"
+    redirect '/posts'
   end
 
   get '/post/new' do
