@@ -1,4 +1,146 @@
-- @posts.each do |post|
-  .title= post.title
-  .description= post.body
+%table{ :cellspacing => 0, :cellpadding => 0}
+  %thead
+    %tr.head
+      %td{ :colspan => 2} I am the header
+  %tbody
+    %tr
+      %td.line_numbers
+        %pre
+          - 1...200.times do |x|
+            %span #{x}
 
+      %td.main{ :width => "100%" }
+        .content
+          .search
+            .query
+              %form{:action => '/posts/search', :method => 'post'}
+              %span.no> Post
+              %span.dot> .
+              %span> all(
+              %span.sym :title
+              %span> .like =>
+              %input{:type => "text", :name => "search"}
+              %span )
+              %input{:type => "submit", :value => "search"}
+              %div.comment # => select * from "posts" where ("title" like '%')
+
+            .query
+              %form{:action => '/posts/search_using_or', :method => 'post'}
+              %span.no> Post
+              %span.dot> .
+              %span> all(
+              %span.sym :title
+              %span> .like =>
+              %input{:type => "text", :name => "title"}
+              %span= ") |"
+              %span.no  Post
+              %span.dot> .
+              %span> all(
+              %span.sym :body
+              %span> .like =>
+              %input{:type => "text", :name => "body"}
+              %span> )
+              %input{:type => "submit", :value => "search"}
+              %div.comment # => select * from "posts" where ("title" like '%' or "body" like '%')
+
+            .query
+              %form{:action => '/posts/search_using_and', :method => 'post'}
+              %span.no> Post
+              %span.dot> .
+              %span> all(
+              %span.sym :title
+              %span> .like =>
+              %input{:type => "text", :name => "title"}
+              %span ) &
+              %span.no  Post
+              %span.dot> .
+              %span> all(
+              %span.sym :body
+              %span> .like =>
+              %input{:type => "text", :name => "body"}
+              %span> )
+              %input{:type => "submit", :value => "search"}
+              %div.comment # => select * from "posts" where ("title" = '' and "body" like '')
+
+            .query
+              %form{:action => '/posts/search_using_not', :method => 'post'}
+              %span.no> Post
+              %span.dot> .
+              %span> all(
+              %span.sym :title
+              %span> .like =>
+              %input{:type => "text", :name => "title"}
+              %span ) -
+              %span.no  Post
+              %span.dot> .
+              %span> all(
+              %span.sym :body
+              %span> .like =>
+              %input{:type => "text", :name => "body"}
+              %span> )
+              %input{:type => "submit", :value => "search"}
+              %div.comment # => select * from "posts" where ("title" = '' and  not ("body" like ''))
+
+            - unless @posts.empty?
+              .get_links
+                %div
+                  %a{:href => "/posts/first"}
+                    %span.no Post
+                    %span> .first
+                  %span.comment.right #=> fetch first post
+                %div
+                  %a{:href => "/posts/last"}
+                    %span.no Post
+                    %span> .last
+                  %span.comment.right #=> fetch last post
+
+
+            %div.code_block
+              def
+              %a.method_name{:href => "/posts/asc"}sort_asc_by_title
+              .sort
+                %span.no Post
+                %span> .all(:order => [
+                %span.sym> :title 
+                %span> .asc])
+              end
+
+            %div.code_block
+              def
+              %a.method_name{:href => "/posts/desc"}sort_desc_by_title
+              .sort
+                %span.no Post
+                %span> .all(:order => [
+                %span.sym> :title 
+                %span> .desc])
+              end
+
+            .list_posts
+          - unless @posts.empty?
+            - @first = true
+            - @posts.each do |post|
+              %div.post{:style => "margin-top: 10px;padding: 5px;"}
+                .post_title
+                  %span post =
+                  %span.no Post
+                  %span> .get(
+                  %span.sym :id
+                  %span => #{post.id})
+                  %br
+                  %span.id puts post.title
+                  %span.comment
+                    %span # => #{post.title}
+                %div.post_body
+                  %div.id puts post.body 
+                  %div.comment # => #{post.body}
+                %span.id puts post.created_at
+                %span.comment # => #{post.created_at}
+
+          .destroy.title
+            %form{:action => '/posts/destroy_all', :method => 'post'}
+              %input{:type => "submit", :value => "destroy all!"}
+              %span.comment.right #=> Post.destroy
+          .destroy.title
+            %form{:action => '/posts/setup', :method => 'post'}
+              %input{:type => "submit", :value => "create more!"}
+              %span.comment.right #=> setup sample data
