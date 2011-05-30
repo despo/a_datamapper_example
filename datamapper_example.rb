@@ -22,10 +22,7 @@ class DataMapperExample < Sinatra::Base
   end
 
   post '/post/add' do
-    post = Post.new
-    post.title = params[:title]
-    post.body = params[:body]
-    post.save
+    post = Post.create(title: params[:title], body: params[:body])
     redirect "/posts"
   end
 
