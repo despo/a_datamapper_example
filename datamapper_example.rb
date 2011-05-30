@@ -26,4 +26,7 @@ class DataMapperExample < Sinatra::Base
     redirect "/posts"
   end
 
+  get '/application.css' do
+    sass :style
+  end
 end
